@@ -20,18 +20,24 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    cardColor: Color(0xFF1D1E33),
+                  ),
                 ),
                 Expanded(
                   flex: 1,
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    cardColor: Color(0xFF1D1E33),
+                  ),
                 ),
               ],
             ),
           ),
           Expanded(
             flex: 1,
-            child: ReusableCard(),
+            child: ReusableCard(
+              cardColor: Color(0xFF1D1E33),
+            ),
           ),
           Expanded(
             flex: 1,
@@ -39,11 +45,15 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    cardColor: Color(0xFF1D1E33),
+                  ),
                 ),
                 Expanded(
                   flex: 1,
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    cardColor: Color(0xFF1D1E33),
+                  ),
                 ),
               ],
             ),
@@ -56,16 +66,17 @@ class _InputPageState extends State<InputPage> {
 
 // created by just clicking "Extract Widget"
 class ReusableCard extends StatelessWidget {
-  const ReusableCard({
-    Key key,
-  }) : super(key: key);
+  final Color cardColor;
+
+  // constructor w/ required parameter "cardColor"
+  ReusableCard({@required this.cardColor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Color(0xFF1D1E33),
+        color: cardColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
     );
