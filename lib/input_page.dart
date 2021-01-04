@@ -3,11 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'reusable_card.dart';
 import 'icon_content.dart';
-
-const bottomContainerHeight = 80.0;
-const activeCardColor = Color(0xFF1D1E33);
-const inactiveCardColor = Color(0xFF111328);
-const bottomContainerColor = Color(0xFFEB1555);
+import 'constants.dart';
 
 enum Gender { male, female }
 
@@ -18,27 +14,7 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
-  // Color maleCardColor = inactiveCardColor;
-  // Color femaleCardColor = inactiveCardColor;
-
-  // 0 - female card pressed, 1 - male card pressed
-  // void updateColor(Gender gender) {
-  //   if (gender == Gender.male) {
-  //     if (maleCardColor == inactiveCardColor) {
-  //       maleCardColor = activeCardColor;
-  //       femaleCardColor = inactiveCardColor;
-  //     } else {
-  //       maleCardColor = inactiveCardColor;
-  //     }
-  //   } else if (gender == Gender.female) {
-  //     if (femaleCardColor == inactiveCardColor) {
-  //       femaleCardColor = activeCardColor;
-  //       maleCardColor = inactiveCardColor;
-  //     } else {
-  //       femaleCardColor = inactiveCardColor;
-  //     }
-  //   }
-  // }
+  int height = 180;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +23,7 @@ class _InputPageState extends State<InputPage> {
         title: Text('BMI CALCULATOR'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             flex: 1,
@@ -54,8 +31,13 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: GestureDetector(
-                    onTap: () {
+                  child: ReusableCard(
+                    cardColor: selectedGender == Gender.male
+                        ? kActiveCardColor
+                        : kInactiveCardColor,
+                    cardChild:
+                        IconContent(label: "MALE", icon: FontAwesomeIcons.mars),
+                    onTapFunction: () {
                       setState(() {
                         if (selectedGender == Gender.male) {
                           selectedGender = null;
@@ -65,19 +47,17 @@ class _InputPageState extends State<InputPage> {
                         //updateColor(Gender.male);
                       });
                     },
-                    child: ReusableCard(
-                      cardColor: selectedGender == Gender.male
-                          ? activeCardColor
-                          : inactiveCardColor,
-                      cardChild: IconContent(
-                          label: "MALE", icon: FontAwesomeIcons.mars),
-                    ),
                   ),
                 ),
                 Expanded(
                   flex: 1,
-                  child: GestureDetector(
-                    onTap: () {
+                  child: ReusableCard(
+                    cardColor: selectedGender == Gender.female
+                        ? kActiveCardColor
+                        : kInactiveCardColor,
+                    cardChild: IconContent(
+                        label: "FEMALE", icon: FontAwesomeIcons.venus),
+                    onTapFunction: () {
                       setState(() {
                         if (selectedGender == Gender.female) {
                           selectedGender = null;
@@ -87,13 +67,6 @@ class _InputPageState extends State<InputPage> {
                         //updateColor(Gender.female);
                       });
                     },
-                    child: ReusableCard(
-                      cardColor: selectedGender == Gender.female
-                          ? activeCardColor
-                          : inactiveCardColor,
-                      cardChild: IconContent(
-                          label: "FEMALE", icon: FontAwesomeIcons.venus),
-                    ),
                   ),
                 ),
               ],
@@ -102,7 +75,43 @@ class _InputPageState extends State<InputPage> {
           Expanded(
             flex: 1,
             child: ReusableCard(
-              cardColor: activeCardColor,
+              cardColor: kActiveCardColor,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'HEIGHT',
+                    style: kLabelTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        height.toString(),
+                        style: kNumberTextStyle,
+                      ),
+                      Text(
+                        "cm",
+                        style: kLabelTextStyle,
+                      ),
+                    ],
+                  ),
+                  Slider(
+                    value: height.toDouble(),
+                    min: 120,
+                    max: 220,
+                    activeColor: Color(0xFFEB1555),
+                    inactiveColor: Color(0xFF8D8E98),
+                    onChanged: (double newValue) {
+                      setState(() {
+                        height = newValue.round();
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -112,13 +121,13 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   flex: 1,
                   child: ReusableCard(
-                    cardColor: activeCardColor,
+                    cardColor: kActiveCardColor,
                   ),
                 ),
                 Expanded(
                   flex: 1,
                   child: ReusableCard(
-                    cardColor: activeCardColor,
+                    cardColor: kActiveCardColor,
                   ),
                 ),
               ],
