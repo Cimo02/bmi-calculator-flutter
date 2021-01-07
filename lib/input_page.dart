@@ -15,6 +15,7 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
   int height = 180;
+  int weight = 60;
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +133,41 @@ class _InputPageState extends State<InputPage> {
                   flex: 1,
                   child: ReusableCard(
                     cardColor: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'WEIGHT',
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: kNumberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 10.0),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPressed: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
@@ -145,6 +181,29 @@ class _InputPageState extends State<InputPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+// Creating a Flutter component from scratch
+class RoundIconButton extends StatelessWidget {
+  final IconData icon;
+  final Function onPressed;
+
+  RoundIconButton({@required this.icon, @required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icon),
+      onPressed: onPressed,
+      elevation: 0.0,
+      constraints: BoxConstraints.tightFor(
+        height: 56.0,
+        width: 56.0,
+      ),
+      shape: CircleBorder(),
+      fillColor: Color(0xFF4C4F55),
     );
   }
 }
