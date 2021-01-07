@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'reusable_card.dart';
-import 'icon_content.dart';
-import 'constants.dart';
+import 'results_page.dart';
+import '../components/reusable_card.dart';
+import '../components/icon_content.dart';
+import '../constants.dart';
+import '../components/bottom_button.dart';
+import '../components/round_icon_button.dart';
+import '../calculator_brain.dart';
 
 enum Gender { male, female }
 
@@ -215,31 +219,26 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
+          BottomButton(
+            buttonText: "CALCULATE",
+            onTap: () {
+              CalculatorBrain calc = CalculatorBrain(
+                height: height,
+                weight: weight,
+              );
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResultsPage(
+                            bmiResult: calc.calculateBMI(),
+                            interpretation: calc.getDescription(),
+                            resultText: calc.getResult(),
+                          )));
+            },
+          )
         ],
       ),
-    );
-  }
-}
-
-// Creating a Flutter component from scratch
-class RoundIconButton extends StatelessWidget {
-  final IconData icon;
-  final Function onPressed;
-
-  RoundIconButton({@required this.icon, @required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(icon),
-      onPressed: onPressed,
-      elevation: 0.0,
-      constraints: BoxConstraints.tightFor(
-        height: 56.0,
-        width: 56.0,
-      ),
-      shape: CircleBorder(),
-      fillColor: Color(0xFF4C4F55),
     );
   }
 }
